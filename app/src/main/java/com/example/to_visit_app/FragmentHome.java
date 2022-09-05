@@ -3,10 +3,23 @@ package com.example.to_visit_app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.to_visit_app.RecyclerView.VisitAdapter;
+import com.example.to_visit_app.RecyclerView.VisitRecycler;
+import com.example.to_visit_app.ViewModel.VisitViewModel;
+import com.example.to_visit_app.model.VisitList;
+import com.example.to_visit_app.model.VisitModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +27,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FragmentHome extends Fragment {
+
+    private View view;
+    VisitAdapter recyclerViewAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +74,30 @@ public class FragmentHome extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        RecyclerView visit_rv = view.findViewById(R.id.rv_visits);
+
+
+
+        VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
+        model.getVisits().observe(requireActivity(), visits -> {
+
+            ArrayList<VisitList> itemList = new ArrayList<>();
+            for (VisitModel instantVisit : visits) {
+                String visit = instantVisit.getWhat();
+                itemList.add(new VisitRecycler(visit));
+            }
+            RecyclerView.Adapter<VisitAdapter.ViewHolder> adapter = new VisitAdapter(itemList);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+            visit_rv.setLayoutManager(layoutManager);
+            visit_rv.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        });
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
+
 }
