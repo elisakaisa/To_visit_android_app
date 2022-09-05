@@ -14,42 +14,43 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.to_visit_app.model.JSONParser;
+import com.example.to_visit_app.model.LoginModel;
 import com.example.to_visit_app.model.VisitModel;
 
 import java.util.List;
 
-public class VisitViewModel extends AndroidViewModel {
+public class LoginViewModel extends AndroidViewModel {
+    //TODO: see how to implement login into vm? necessary?
 
     private final JSONParser cParser = new JSONParser();
     private final RequestQueue mRequestQueue;
 
-    private MutableLiveData<List<VisitModel>> visits;
+    private MutableLiveData<LoginModel> user;
     private final Application application;
 
-    public VisitViewModel(@NonNull Application application) {
+    public LoginViewModel(@NonNull Application application) {
         super(application);
         this.application = application;
         mRequestQueue = Volley.newRequestQueue(application.getApplicationContext());
     }
 
-    public LiveData<List<VisitModel>> getVisits() {
-        if (visits == null) {
-            visits = new MutableLiveData<>();
-            loadVisits();
+    public LiveData<LoginModel> getUser() {
+        if (user == null) {
+            user = new MutableLiveData<>();
+            //loadVisits();
+            //TDOO: throw error message about not logged in
         }
-        Log.i("getVisits -> visits", String.valueOf(visits));
-        return visits;
+        //Log.i("getVisits -> visits", String.valueOf(user));
+        return user;
     }
 
-    private void loadVisits() {
+    private void login() {
         // asynchronous operation to fetch visits
-        String mUrl = "https://pacific-spire-62523.herokuapp.com/api/visits";
-        JsonArrayRequest getVisitRequest = new JsonArrayRequest(Request.Method.GET, mUrl, null, response -> {
+        String mUrl = "https://pacific-spire-62523.herokuapp.com/api/login";
+        JsonArrayRequest getVisitRequest = new JsonArrayRequest(Request.Method.POST, mUrl, null, response -> {
             try {
                 List<VisitModel> visitData = cParser.getVisits(response);
 
-                visits.setValue(visitData);
-                Log.i("ViewModel, visits", String.valueOf(visits));
 
             } catch (Exception e){
                 Log.i("error whilst parsing", e.toString());

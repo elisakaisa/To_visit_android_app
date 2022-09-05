@@ -2,12 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/nav_add"
+        android:icon="@drawable/ic_baseline_library_add_24"
+        android:title="@string/add" />
+    <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/home" />
     <item
-        android:id="@+id/nav_add"
-        android:icon="@drawable/ic_baseline_library_add_24"
-        android:title="@string/add" />
+        android:id="@+id/nav_login"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="@string/login" />
 
 </menu>

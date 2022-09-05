@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     private boolean listener(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.nav_add:
@@ -44,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.nav_home:
                 loadFragment(new FragmentHome());
+                return true;
+            case R.id.nav_login:
+                loadFragment(new FragmentLogin());
                 return true;
         }
         return false;
