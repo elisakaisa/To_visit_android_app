@@ -107,10 +107,7 @@ public class FragmentLogin extends Fragment {
         }
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, mUrl, jsonBody, response -> {
             try {
-                Log.d("POST request response", String.valueOf(response));
-                // TODO: save token
-                loginVM.setUser(response.getString("username"));
-
+                loginVM.setUser(response);
             } catch (Exception e){
                 Log.i("error whilst parsing", e.toString());
             }
