@@ -13,14 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.to_visit_app.ViewModel.LoginViewModel;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.to_visit_app.utils.AlertDial;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +23,6 @@ import org.json.JSONObject;
  */
 public class FragmentLogin extends Fragment {
 
-    private RequestQueue mRequestQueue;
     LoginViewModel loginVM;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -81,57 +74,25 @@ public class FragmentLogin extends Fragment {
         EditText etPassword = view.findViewById(R.id.et_password);
         Button btnLogin = view.findViewById(R.id.btn_login);
 
-        // Volley
-        mRequestQueue = Volley.newRequestQueue(getActivity());
-
         /*-------- VIEW MODEL ---------*/
         loginVM = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
 
         /*-------- LISTENERS --------*/
-        btnLogin.setOnClickListener(v ->
-                login(String.valueOf(etUsername.getText()), String.valueOf(etPassword.getText())));
+        btnLogin.setOnClickListener(v -> {
+            loginVM.login(String.valueOf(etUsername.getText()), String.valueOf(etPassword.getText())) ;
+        });
+
+        loginVM.setLoginListener((loggedIn, errorMessage) -> {
+            if (loggedIn) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.content_container, new FragmentHome(), "");
+                fragmentTransaction.commit();
+                //TODO: fix bottom navigation highlighted icon
+            } else {
+                new AlertDial().createMsgDialog(getActivity(), "Login error", errorMessage).show();
+            }
+        });
 
         return view;
-    }
-
-    private void login(String username, String password) {
-        // asynchronous operation to fetch visits
-        String mUrl = "https://pacific-spire-62523.herokuapp.com/api/login";
-
-        JSONObject jsonBody = new JSONObject();
-        try {
-            jsonBody.put("username", username);
-            jsonBody.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, mUrl, jsonBody, response -> {
-            try {
-                loginVM.setUser(response);
-            } catch (Exception e){
-                Log.i("error whilst parsing", e.toString());
-            }
-        }, error -> {
-            Log.i("Volley error", error.toString());
-            //TODO: handle 401 wrong credentials
-        }){
-            @Override
-            public byte[] getBody(){
-                String jsonString = jsonBody.toString();
-                return jsonString.getBytes();
-            }
-            @Override
-            public String getBodyContentType() {
-                return "application/json";
-            }};
-
-        loginRequest.setTag(this);
-        mRequestQueue.add(loginRequest);
-
-        // go to home fragment
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content_container, new FragmentHome(), "");
-        fragmentTransaction.commit();
-        //TODO: fix bottom navigation highlighted icon
     }
 }
