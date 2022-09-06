@@ -63,11 +63,16 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
             if (!loggedIn.get()) loadFragment(new FragmentLogin());
             else {
-
-                loginVM.deleteUser();
-                tvLogInOut.setText("Login");
-                tv_username.setVisibility(View.INVISIBLE);
-                loggedIn.set(false);
+                AlertDial cAlertDial = new AlertDial();
+                cAlertDial.createCancellableMsgDialog(this, "Logout", "Are you sure you want to log out?").show();
+                cAlertDial.setAlertListener(ok -> {
+                    if (ok) {
+                        loginVM.deleteUser();
+                        tvLogInOut.setText("Login");
+                        tv_username.setVisibility(View.INVISIBLE);
+                        loggedIn.set(false);
+                    }
+                });
             }
         });
     }

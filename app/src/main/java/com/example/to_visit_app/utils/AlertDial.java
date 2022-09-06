@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AlertDial extends AppCompatActivity {
+    private AlertInterface listener;
 
     // Alert dialogs for error messages
     public AlertDialog createMsgDialog(Context context, String title, String message) {
@@ -19,16 +20,25 @@ public class AlertDial extends AppCompatActivity {
         return builder.create();
     }
 
-    // Alert dialogs for error messages
-    //TODO: implement listener to make sure the thing is cancellable
+    // Alert dialogs for error messages with yes or no
     public AlertDialog createCancellableMsgDialog(Context context, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setCancelable(true);
-        builder.setPositiveButton("Ok", (dialog, id) -> {});
-        builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+        builder.setPositiveButton("Yes", (dialog, id) -> listener.onAlert(true));
+        builder.setNegativeButton("No", (dialog, id) -> listener.onAlert(false));
         return builder.create();
+    }
+
+    public interface AlertInterface {
+        // used in both register and login
+        void onAlert(boolean ok);
+    }
+
+    public void setAlertListener(AlertDial.AlertInterface listener) {
+        // Assign the listener implementing events interface that will receive the events
+        this.listener = listener;
     }
 }
 
