@@ -9,7 +9,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.example.to_visit_app.ViewModel.LoginViewModel;
 import com.example.to_visit_app.ViewModel.VisitViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(this::listener);
+        TextView tv_username = findViewById(R.id.tv_logged_as);
 
         //default fragment
         loadFragment(new FragmentHome());
@@ -35,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         VisitViewModel model = new ViewModelProvider(this).get(VisitViewModel.class);
         model.getVisits().observe(this, visits -> {
             Log.d("MainActivity -> VM", String.valueOf(visits.get(1).getWhat()));
+        });
+        LoginViewModel loginVM = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginVM.getUser().observe(this, user ->{
+            String sUser = "Logged in as user: " + user;
+            tv_username.setText(sUser);
         });
     }
 

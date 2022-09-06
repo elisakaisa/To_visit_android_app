@@ -3,28 +3,24 @@ package com.example.to_visit_app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.to_visit_app.model.VisitModel;
+import com.example.to_visit_app.ViewModel.LoginViewModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +30,7 @@ import java.util.Map;
 public class FragmentLogin extends Fragment {
 
     private RequestQueue mRequestQueue;
+    LoginViewModel loginVM;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,25 +77,31 @@ public class FragmentLogin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        EditText etUsername = view.findViewById(R.id.et_username);
+        EditText etPassword = view.findViewById(R.id.et_password);
+        Button btnLogin = view.findViewById(R.id.btn_login);
 
         // Volley
         mRequestQueue = Volley.newRequestQueue(getActivity());
 
-        //TODO: put it on button
-        login();
+        /*-------- VIEW MODEL ---------*/
+        loginVM = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
 
+        /*-------- LISTENERS --------*/
+        btnLogin.setOnClickListener(v ->
+                login(String.valueOf(etUsername.getText()), String.valueOf(etPassword.getText())));
 
         return view;
     }
 
-    private void login() {
+    private void login(String username, String password) {
         // asynchronous operation to fetch visits
         String mUrl = "https://pacific-spire-62523.herokuapp.com/api/login";
 
         JSONObject jsonBody = new JSONObject();
-        try { // TODO: add values
-            jsonBody.put("username", "");
-            jsonBody.put("password", "");
+        try {
+            jsonBody.put("username", username);
+            jsonBody.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -106,6 +109,7 @@ public class FragmentLogin extends Fragment {
             try {
                 Log.d("POST request response", String.valueOf(response));
                 // TODO: save token
+                loginVM.setUser(response.getString("username"));
 
             } catch (Exception e){
                 Log.i("error whilst parsing", e.toString());
@@ -126,5 +130,11 @@ public class FragmentLogin extends Fragment {
 
         loginRequest.setTag(this);
         mRequestQueue.add(loginRequest);
+
+        // go to home fragment
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content_container, new FragmentHome(), "");
+        fragmentTransaction.commit();
+        //TODO: fix bottom navigation highlighted icon
     }
 }
