@@ -1,6 +1,8 @@
 package com.example.to_visit_app.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -37,7 +39,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     public interface LoginInterface {
         // used in both register and login
-        void onLoggedIn(boolean loggedIn, String errorMessage);
+        void onLoggedIn(boolean loggedIn, String errorMessage, UserModel user);
     }
 
     public void setLoginListener(LoginInterface listener) {
@@ -45,7 +47,7 @@ public class LoginViewModel extends AndroidViewModel {
         this.listener = listener;
     }
 
-    public void setUser(JSONObject objUser) {
+    /*public void setUser(JSONObject objUser) {
         UserModel usermodel = new UserModel();
         try {
             usermodel.setUsername(objUser.getString("username"));
@@ -54,9 +56,15 @@ public class LoginViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
         user.postValue(usermodel);
+    } */
+    public void setUser(UserModel objUser) {
+        user.postValue(objUser);
     }
     public void deleteUser() {
-        user.postValue(null);
+        UserModel nullUser = new UserModel();
+        nullUser.setUsername(null);
+        nullUser.setToken(null);
+        user.postValue(nullUser);
     }
 
     public void login(String username, String password) {
@@ -71,14 +79,17 @@ public class LoginViewModel extends AndroidViewModel {
         }
         JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, mUrl, jsonBody, response -> {
             try {
-                setUser(response);
-                listener.onLoggedIn(true, errorMessage);
+                UserModel usermodel = new UserModel();
+                usermodel.setUsername(response.getString("username"));
+                usermodel.setToken(response.getString("token"));
+                setUser(usermodel);
+                listener.onLoggedIn(true, errorMessage, usermodel);
             } catch (Exception e) {
-                listener.onLoggedIn(false, e.toString());
+                listener.onLoggedIn(false, e.toString(), null);
             }
         }, error -> {
             if (error.toString().contains("AuthFailureError")) {
-                listener.onLoggedIn(false, "Authentication error");
+                listener.onLoggedIn(false, "Authentication error", null);
             }
         });
 

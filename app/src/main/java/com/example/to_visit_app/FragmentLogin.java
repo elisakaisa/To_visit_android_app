@@ -1,5 +1,7 @@
 package com.example.to_visit_app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +17,9 @@ import android.widget.EditText;
 
 import com.example.to_visit_app.ViewModel.LoginViewModel;
 import com.example.to_visit_app.utils.AlertDial;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,8 +87,16 @@ public class FragmentLogin extends Fragment {
             loginVM.login(String.valueOf(etUsername.getText()), String.valueOf(etPassword.getText())) ;
         });
 
-        loginVM.setLoginListener((loggedIn, errorMessage) -> {
+        loginVM.setLoginListener((loggedIn, errorMessage, user) -> {
             if (loggedIn) {
+                String username = user.getUsername();
+                String token = user.getToken();
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = sharedPref.edit();
+                prefsEditor.putString("username", username);
+                prefsEditor.putString("token", token);
+                prefsEditor.apply();
+
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.content_container, new FragmentHome(), "");
                 fragmentTransaction.commit();

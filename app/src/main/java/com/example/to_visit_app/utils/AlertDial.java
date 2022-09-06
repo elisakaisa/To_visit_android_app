@@ -32,7 +32,6 @@ public class AlertDial extends AppCompatActivity {
     }
 
     public interface AlertInterface {
-        // used in both register and login
         void onAlert(boolean ok);
     }
 
