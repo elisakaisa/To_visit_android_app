@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.to_visit_app.comBackend.UrlSetter;
 import com.example.to_visit_app.model.JSONParser;
 import com.example.to_visit_app.model.VisitModel;
 
@@ -37,20 +38,16 @@ public class VisitViewModel extends AndroidViewModel {
             visits = new MutableLiveData<>();
             loadVisits();
         }
-        Log.i("getVisits -> visits", String.valueOf(visits));
         return visits;
     }
 
     private void loadVisits() {
         // asynchronous operation to fetch visits
-        String mUrl = "https://pacific-spire-62523.herokuapp.com/api/visits";
+        String mUrl = UrlSetter.getVisitApiUrl();
         JsonArrayRequest getVisitRequest = new JsonArrayRequest(Request.Method.GET, mUrl, null, response -> {
             try {
                 List<VisitModel> visitData = cParser.getVisits(response);
-
                 visits.setValue(visitData);
-                Log.i("ViewModel, visits", String.valueOf(visits));
-
             } catch (Exception e){
                 Log.i("error whilst parsing", e.toString());
             }
@@ -62,7 +59,6 @@ public class VisitViewModel extends AndroidViewModel {
 
     private final Response.ErrorListener errorListener = error -> {
         Log.i("Volley error", error.toString());
-        //createMsgDialog("Network error", "Couldn't download the data").show();
     };
 
 }

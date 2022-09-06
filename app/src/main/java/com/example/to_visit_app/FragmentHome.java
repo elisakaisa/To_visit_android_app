@@ -77,8 +77,6 @@ public class FragmentHome extends Fragment {
 
         RecyclerView visit_rv = view.findViewById(R.id.rv_visits);
 
-
-
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
         model.getVisits().observe(requireActivity(), visits -> {
 
@@ -93,7 +91,6 @@ public class FragmentHome extends Fragment {
             visit_rv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         });
-
 
         // Inflate the layout for this fragment
         return view;

@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.to_visit_app.ViewModel.LoginViewModel;
+import com.example.to_visit_app.utils.AlertDial;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
             if (!loggedIn.get()) loadFragment(new FragmentLogin());
             else {
+
                 loginVM.deleteUser();
                 tvLogInOut.setText("Login");
                 tv_username.setVisibility(View.INVISIBLE);

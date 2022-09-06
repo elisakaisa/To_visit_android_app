@@ -18,5 +18,17 @@ public class AlertDial extends AppCompatActivity {
         builder.setPositiveButton("Ok", (dialog, id) -> {});
         return builder.create();
     }
+
+    // Alert dialogs for error messages
+    //TODO: implement listener to make sure the thing is cancellable
+    public AlertDialog createCancellableMsgDialog(Context context, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(true);
+        builder.setPositiveButton("Ok", (dialog, id) -> {});
+        builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+        return builder.create();
+    }
 }
 
