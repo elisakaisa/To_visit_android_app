@@ -41,7 +41,7 @@ public class VisitViewModel extends AndroidViewModel {
         return visits;
     }
 
-    private void loadVisits() {
+    public void loadVisits() {
         // asynchronous operation to fetch visits
         String mUrl = UrlSetter.getVisitApiUrl();
         JsonArrayRequest getVisitRequest = new JsonArrayRequest(Request.Method.GET, mUrl, null, response -> {

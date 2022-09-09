@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,6 @@ import com.example.to_visit_app.model.VisitList;
 import com.example.to_visit_app.model.VisitModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,10 +75,12 @@ public class FragmentHome extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         RecyclerView visit_rv = view.findViewById(R.id.rv_visits);
 
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
         model.getVisits().observe(requireActivity(), visits -> {
+            Log.i("VM updated", "yeeeeee");
 
             ArrayList<VisitList> itemList = new ArrayList<>();
             for (VisitModel instantVisit : visits) {
@@ -91,6 +93,11 @@ public class FragmentHome extends Fragment {
             visit_rv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+                    model.loadVisits();
+                    swipeRefreshLayout.setRefreshing(false);
+                });
 
         // Inflate the layout for this fragment
         return view;

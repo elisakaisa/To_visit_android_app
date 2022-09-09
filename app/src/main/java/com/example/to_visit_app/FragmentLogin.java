@@ -17,9 +17,6 @@ import android.widget.EditText;
 
 import com.example.to_visit_app.ViewModel.LoginViewModel;
 import com.example.to_visit_app.utils.AlertDial;
-import com.google.gson.Gson;
-
-import org.json.JSONException;
 
 /**
  * A simple {@link Fragment} subclass.

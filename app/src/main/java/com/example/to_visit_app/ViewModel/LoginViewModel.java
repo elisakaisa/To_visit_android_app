@@ -25,7 +25,6 @@ public class LoginViewModel extends AndroidViewModel {
     private final RequestQueue mRequestQueue;
 
     private MutableLiveData<UserModel> user = new MutableLiveData<>();
-    private String errorMessage;
 
     public MutableLiveData<UserModel> getUser() {
         return user;
@@ -38,7 +37,6 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public interface LoginInterface {
-        // used in both register and login
         void onLoggedIn(boolean loggedIn, String errorMessage, UserModel user);
     }
 
@@ -47,16 +45,6 @@ public class LoginViewModel extends AndroidViewModel {
         this.listener = listener;
     }
 
-    /*public void setUser(JSONObject objUser) {
-        UserModel usermodel = new UserModel();
-        try {
-            usermodel.setUsername(objUser.getString("username"));
-            usermodel.setToken(objUser.getString("token"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        user.postValue(usermodel);
-    } */
     public void setUser(UserModel objUser) {
         user.postValue(objUser);
     }
@@ -83,7 +71,7 @@ public class LoginViewModel extends AndroidViewModel {
                 usermodel.setUsername(response.getString("username"));
                 usermodel.setToken(response.getString("token"));
                 setUser(usermodel);
-                listener.onLoggedIn(true, errorMessage, usermodel);
+                listener.onLoggedIn(true, null, usermodel);
             } catch (Exception e) {
                 listener.onLoggedIn(false, e.toString(), null);
             }
