@@ -19,10 +19,6 @@ import com.example.to_visit_app.ViewModel.LoginViewModel;
 import com.example.to_visit_app.model.UserModel;
 import com.example.to_visit_app.utils.AlertDial;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.concurrent.atomic.AtomicReference;
 

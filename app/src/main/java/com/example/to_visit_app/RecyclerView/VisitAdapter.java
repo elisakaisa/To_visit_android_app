@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,20 +20,25 @@ import java.util.List;
 
 public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> {
 
+    private final VisitRecyclerInterface iVisitRecyclerInterface;
     ArrayList<VisitList> mVisits;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final String id = null;
         public TextView whatTV;
+        public RelativeLayout cell;
 
         public ViewHolder(View itemView) {
             super(itemView);
             whatTV = itemView.findViewById(R.id.tv_what);
+            cell = itemView.findViewById(R.id.cell);
         }
     }
 
     //constructor
-    public VisitAdapter(ArrayList<VisitList> visitItemsList) {
+    public VisitAdapter(ArrayList<VisitList> visitItemsList, VisitRecyclerInterface iVisitRecyclerInterface) {
         this.mVisits = visitItemsList;
+        this.iVisitRecyclerInterface = iVisitRecyclerInterface;
     }
 
     @NonNull
@@ -49,6 +55,10 @@ public class VisitAdapter extends RecyclerView.Adapter<VisitAdapter.ViewHolder> 
         Log.i("onBindViewHolder", String.valueOf(position));
         VisitRecycler currentVisit = (VisitRecycler) mVisits.get(position);
         holder.whatTV.setText(currentVisit.getTextWhat());
+
+        holder.cell.setOnClickListener(v -> {
+            iVisitRecyclerInterface.onItemClick(currentVisit.getTextId());
+        });
     }
 
 

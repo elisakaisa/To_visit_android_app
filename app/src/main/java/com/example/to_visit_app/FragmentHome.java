@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.to_visit_app.RecyclerView.VisitAdapter;
 import com.example.to_visit_app.RecyclerView.VisitRecycler;
+import com.example.to_visit_app.RecyclerView.VisitRecyclerInterface;
 import com.example.to_visit_app.ViewModel.VisitViewModel;
 import com.example.to_visit_app.model.VisitList;
 import com.example.to_visit_app.model.VisitModel;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  * Use the {@link FragmentHome#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentHome extends Fragment {
+public class FragmentHome extends Fragment implements VisitRecyclerInterface {
 
     private View view;
 
@@ -80,14 +81,14 @@ public class FragmentHome extends Fragment {
 
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
         model.getVisits().observe(requireActivity(), visits -> {
-            Log.i("VM updated", "yeeeeee");
 
             ArrayList<VisitList> itemList = new ArrayList<>();
             for (VisitModel instantVisit : visits) {
-                String visit = instantVisit.getWhat();
-                itemList.add(new VisitRecycler(visit));
+                String what = instantVisit.getWhat();
+                String id = instantVisit.getId();
+                itemList.add(new VisitRecycler(what, id));
             }
-            RecyclerView.Adapter<VisitAdapter.ViewHolder> adapter = new VisitAdapter(itemList);
+            RecyclerView.Adapter<VisitAdapter.ViewHolder> adapter = new VisitAdapter(itemList, this);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
             visit_rv.setLayoutManager(layoutManager);
             visit_rv.setAdapter(adapter);
@@ -103,4 +104,9 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
+    @Override
+    public void onItemClick(String id) {
+        Log.i("Home", "onClick called: " + id);
+
+    }
 }

@@ -24,9 +24,9 @@ public class JSONParser {
 
             JSONObject individualVisit = visitObjects.getJSONObject(i);
             oneVisit.setWhat(individualVisit.getString("what"));
+            oneVisit.setId(individualVisit.getString("id"));
         }
 
-        Log.i("JSONParser", String.valueOf(visitData));
         return visitData;
     }
 
