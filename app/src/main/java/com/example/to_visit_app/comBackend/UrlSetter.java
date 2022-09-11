@@ -6,6 +6,7 @@ public class UrlSetter {
     public static String getVisitApiUrl() {
         return baseUrl + "/api/visits";
     }
+    public static String getSelectedVisitApiUrl(String id) { return baseUrl + "/api/visits/" + id; }
 
     public static String getLoginApiUrl() {
         return baseUrl + "/api/login";

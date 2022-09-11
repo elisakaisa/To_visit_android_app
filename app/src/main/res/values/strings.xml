@@ -7,4 +7,5 @@
     <string name="username">Username</string>
     <string name="Password">Password</string>
     <string name="logged_as">Logged as</string>
+    <string name="visit">visit</string>
 </resources>

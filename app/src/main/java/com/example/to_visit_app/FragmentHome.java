@@ -3,6 +3,7 @@ package com.example.to_visit_app;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -106,7 +107,12 @@ public class FragmentHome extends Fragment implements VisitRecyclerInterface {
 
     @Override
     public void onItemClick(String id) {
-        Log.i("Home", "onClick called: " + id);
-
+        // set selected visit in VM
+        VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
+        model.setSelectId(id);
+        // change fragment
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content_container, new FragmentVisit(), "");
+        fragmentTransaction.commit();
     }
 }

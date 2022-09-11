@@ -30,4 +30,14 @@ public class JSONParser {
         return visitData;
     }
 
+    public List<VisitModel> getIndividualVisit(JSONObject visitObjects) throws JSONException {
+        ArrayList <VisitModel> visitData = new ArrayList<>();
+        VisitModel oneVisit = new VisitModel();
+        visitData.add(oneVisit);
+
+        oneVisit.setWhat(visitObjects.getString("what"));
+        oneVisit.setId(visitObjects.getString("id"));
+        return visitData;
+    }
+
 }
