@@ -8,4 +8,12 @@
     <string name="Password">Password</string>
     <string name="logged_as">Logged as</string>
     <string name="visit">visit</string>
+    <string name="where">Where</string>
+    <string name="categories">Categories</string>
+    <string name="time_of_the_year">Time of the year</string>
+    <string name="how">How</string>
+    <string name="organisation">Organisation</string>
+    <string name="price_category">Price category</string>
+    <string name="time">Time</string>
+    <string name="loading">Loading ...</string>
 </resources>

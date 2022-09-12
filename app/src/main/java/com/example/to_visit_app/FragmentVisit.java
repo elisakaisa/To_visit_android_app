@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.to_visit_app.ViewModel.VisitViewModel;
@@ -68,12 +69,20 @@ public class FragmentVisit extends Fragment {
         view = inflater.inflate(R.layout.fragment_visit, container, false);
         // Inflate the layout for this fragment
 
+        TableLayout table = view.findViewById(R.id.tableLayout);
+        table.setVisibility(View.GONE);
+        TextView tv_loading = view.findViewById(R.id.tv_loading_ind);
         TextView what_tv = view.findViewById(R.id.tv_what_ind);
+        TextView where_tv = view.findViewById(R.id.tv_where_ind);
+        TextView time_tv = view.findViewById(R.id.tv_time_ind);
 
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
         model.getSelectedVisits().observe(requireActivity(), visit -> {
-            Log.i("Home", visit.get(0).getWhat());
+            tv_loading.setVisibility(View.GONE);
+            table.setVisibility(View.VISIBLE);
             what_tv.setText(visit.get(0).getWhat());
+            where_tv.setText(visit.get(0).getWhere());
+            time_tv.setText(String.valueOf(visit.get(0).getTime())); //TODO: add if conditions that check through enum
         });
 
         return view;

@@ -18,13 +18,8 @@ public class JSONParser {
         ArrayList <VisitModel> visitData = new ArrayList<>();
 
         for (int i = 0; i < visitObjects.length(); i++) {
-            /*-------INIT -------*/
-            VisitModel oneVisit = new VisitModel();
+            VisitModel oneVisit = parse(visitObjects.getJSONObject(i), visitData);
             visitData.add(oneVisit);
-
-            JSONObject individualVisit = visitObjects.getJSONObject(i);
-            oneVisit.setWhat(individualVisit.getString("what"));
-            oneVisit.setId(individualVisit.getString("id"));
         }
 
         return visitData;
@@ -32,12 +27,23 @@ public class JSONParser {
 
     public List<VisitModel> getIndividualVisit(JSONObject visitObjects) throws JSONException {
         ArrayList <VisitModel> visitData = new ArrayList<>();
-        VisitModel oneVisit = new VisitModel();
+        VisitModel oneVisit = parse(visitObjects, visitData);
         visitData.add(oneVisit);
-
-        oneVisit.setWhat(visitObjects.getString("what"));
-        oneVisit.setId(visitObjects.getString("id"));
         return visitData;
+    }
+
+    public VisitModel parse(JSONObject obj, ArrayList<VisitModel> visitData) {
+        VisitModel oneVisit = new VisitModel();
+
+        try {
+            oneVisit.setWhat(obj.getString("what"));
+            oneVisit.setId(obj.getString("id"));
+            oneVisit.setWhere(obj.getString("where"));
+            oneVisit.setTime(obj.getString("timeLength"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return oneVisit;
     }
 
 }
