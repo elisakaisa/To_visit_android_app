@@ -71,18 +71,27 @@ public class FragmentVisit extends Fragment {
 
         TableLayout table = view.findViewById(R.id.tableLayout);
         table.setVisibility(View.GONE);
-        TextView tv_loading = view.findViewById(R.id.tv_loading_ind);
-        TextView what_tv = view.findViewById(R.id.tv_what_ind);
-        TextView where_tv = view.findViewById(R.id.tv_where_ind);
-        TextView time_tv = view.findViewById(R.id.tv_time_ind);
+        TextView tvLoading = view.findViewById(R.id.tv_loading_ind);
+        TextView tvWhat = view.findViewById(R.id.tv_what_ind);
+        TextView tvWhere = view.findViewById(R.id.tv_where_ind);
+        TextView tvTime = view.findViewById(R.id.tv_time_ind);
+        TextView tvCategory = view.findViewById(R.id.tv_cat_ind);
+        TextView tvTimeOfYear = view.findViewById(R.id.tv_toy_ind);
+        TextView tvHow = view.findViewById(R.id.tv_how_ind);
+        TextView tvPriceCat = view.findViewById(R.id.tv_price_cat_ind);
+        TextView tvOrganisation = view.findViewById(R.id.tv_eoo_ind);
 
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
         model.getSelectedVisits().observe(requireActivity(), visit -> {
-            tv_loading.setVisibility(View.GONE);
+            tvLoading.setVisibility(View.GONE);
             table.setVisibility(View.VISIBLE);
-            what_tv.setText(visit.get(0).getWhat());
-            where_tv.setText(visit.get(0).getWhere());
-            time_tv.setText(String.valueOf(visit.get(0).getTime())); //TODO: add if conditions that check through enum
+            tvWhat.setText(visit.get(0).getWhat());
+            tvWhere.setText(visit.get(0).getWhere());
+            tvTime.setText(String.valueOf(visit.get(0).getTime())); //TODO: add if conditions that check through enum
+            tvCategory.setText(String.valueOf(visit.get(0).getCategory()));
+            tvHow.setText(String.valueOf(visit.get(0).getHow()));
+            tvPriceCat.setText(String.valueOf(visit.get(0).getPriceCategory()));
+            tvOrganisation.setText(String.valueOf(visit.get(0).getEaseOfOrganisation()));
         });
 
         return view;
