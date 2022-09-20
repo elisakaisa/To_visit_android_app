@@ -25,29 +25,24 @@ public class JSONParser {
         return visitData;
     }
 
-    public List<VisitModel> getIndividualVisit(JSONObject visitObjects) throws JSONException{
-        ArrayList <VisitModel> visitData = new ArrayList<>();
-        VisitModel oneVisit = parse(visitObjects);
-        visitData.add(oneVisit);
-        return visitData;
+    public VisitModel getIndividualVisit(JSONObject visitObjects) throws JSONException{
+        return parse(visitObjects);
     }
 
     public VisitModel parse(JSONObject obj)  throws JSONException{
-        VisitModel oneVisit = new VisitModel();
-        oneVisit.setWhat(obj.getString("what"));
-        oneVisit.setId(obj.getString("id"));
-        oneVisit.setWhere(obj.getString("where"));
-        oneVisit.setTime(obj.getString("timeLength"));
-        oneVisit.setNotes(obj.getString("notes"));
-        oneVisit.setCategory(obj.getJSONArray("category"));
-        oneVisit.setHow(obj.getJSONArray("how"));
-        oneVisit.setPriceCategory(obj.getString("priceCategory"));
-        oneVisit.setDone(obj.getBoolean("done"));
-        oneVisit.setTotalWalkingDistance(obj.getString("totalWalkingDistance"));
-        oneVisit.setActualPrice(obj.getString("actualPrice"));
-        oneVisit.setEaseOfOrganisation(obj.getString("easeOfOrganization"));
-
-        return oneVisit;
+        return new VisitModel(
+                obj.getString("what"),
+                obj.getString("id"),
+                obj.getString("where"),
+                obj.getString("timeLength"),
+                obj.getString("priceCategory"),
+                obj.getString("easeOfOrganization"),
+                obj.getString("notes"),
+                obj.getJSONArray("category"),
+                obj.getJSONArray("how"),
+                obj.getBoolean("done"),
+                obj.getString("totalWalkingDistance"),
+                obj.getString("actualPrice"));
     }
 
 }

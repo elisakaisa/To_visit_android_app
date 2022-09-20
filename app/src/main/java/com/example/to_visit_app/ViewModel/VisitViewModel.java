@@ -26,7 +26,7 @@ public class VisitViewModel extends AndroidViewModel {
     private final RequestQueue mRequestQueue;
 
     private MutableLiveData<List<VisitModel>> visits;
-    private MutableLiveData<List<VisitModel>> visit;
+    private MutableLiveData<VisitModel> visit;
     private final Application application;
 
     private String selectedId;
@@ -78,7 +78,7 @@ public class VisitViewModel extends AndroidViewModel {
         String mUrl = UrlSetter.getSelectedVisitApiUrl(selectedId);
         JsonObjectRequest getSelectedVisitRequest = new JsonObjectRequest(Request.Method.GET, mUrl, null, response -> {
             try {
-                List<VisitModel> visitData = cParser.getIndividualVisit(response);
+                VisitModel visitData = cParser.getIndividualVisit(response);
                 visit.setValue(visitData);
             } catch (Exception e){
                 Log.i("error whilst parsing", e.toString());
@@ -89,7 +89,7 @@ public class VisitViewModel extends AndroidViewModel {
         mRequestQueue.add(getSelectedVisitRequest);
     }
 
-    public LiveData<List<VisitModel>> getSelectedVisits() {
+    public LiveData<VisitModel> getSelectedVisits() {
         if (visit == null) {
             visit = new MutableLiveData<>();
             loadSelectedVisit();

@@ -12,4 +12,11 @@ public class Helpers {
             arraylist.add(String.valueOf(json.get(i)));
         }
     }
+
+    public static float convertToFloat(String s) {
+        float f;
+        if (s.equals("null")) f = -1;
+        else f = Float.parseFloat(s);
+        return f;
+    }
 }
