@@ -9,13 +9,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.to_visit_app.ViewModel.LoginViewModel;
+import com.example.to_visit_app.viewModel.LoginViewModel;
 import com.example.to_visit_app.model.UserModel;
 import com.example.to_visit_app.utils.AlertDial;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

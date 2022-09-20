@@ -6,16 +6,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.to_visit_app.ViewModel.VisitViewModel;
 import com.example.to_visit_app.databinding.FragmentVisitBinding;
-import com.example.to_visit_app.model.VisitModel;
+import com.example.to_visit_app.viewModel.VisitViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,8 +76,9 @@ public class FragmentVisit extends Fragment {
         TextView tvLoading = view.findViewById(R.id.tv_loading_ind);
 
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
+
         model.getSelectedVisits().observe(requireActivity(), visit -> {
-            binding.setVisit(visit);
+            binding.setVisitVM(model);
             tvLoading.setVisibility(View.GONE);
             table.setVisibility(View.VISIBLE);
             // todo: make sure that actualPrice and TotWalkingDistance are invisible if -1

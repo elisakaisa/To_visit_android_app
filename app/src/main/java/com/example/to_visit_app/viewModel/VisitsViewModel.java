@@ -1,4 +1,4 @@
-package com.example.to_visit_app.ViewModel;
+package com.example.to_visit_app.viewModel;
 
 import android.app.Application;
 import android.util.Log;
@@ -25,13 +25,9 @@ public class VisitsViewModel extends AndroidViewModel {
     private final RequestQueue mRequestQueue;
 
     private MutableLiveData<List<VisitModel>> visits;
-    private final Application application;
-
-    private String selectedId;
 
     public VisitsViewModel(@NonNull Application application) {
         super(application);
-        this.application = application;
         mRequestQueue = Volley.newRequestQueue(application.getApplicationContext());
     }
 

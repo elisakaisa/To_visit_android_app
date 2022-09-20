@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,8 @@ import android.view.ViewGroup;
 import com.example.to_visit_app.RecyclerView.VisitAdapter;
 import com.example.to_visit_app.RecyclerView.VisitRecycler;
 import com.example.to_visit_app.RecyclerView.VisitRecyclerInterface;
-import com.example.to_visit_app.ViewModel.VisitViewModel;
-import com.example.to_visit_app.ViewModel.VisitsViewModel;
+import com.example.to_visit_app.viewModel.VisitViewModel;
+import com.example.to_visit_app.viewModel.VisitsViewModel;
 import com.example.to_visit_app.model.VisitList;
 import com.example.to_visit_app.model.VisitModel;
 

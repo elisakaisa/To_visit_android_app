@@ -1,8 +1,6 @@
-package com.example.to_visit_app.ViewModel;
+package com.example.to_visit_app.viewModel;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

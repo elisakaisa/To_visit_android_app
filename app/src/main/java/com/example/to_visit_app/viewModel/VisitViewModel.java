@@ -1,4 +1,4 @@
-package com.example.to_visit_app.ViewModel;
+package com.example.to_visit_app.viewModel;
 
 import android.app.Application;
 import android.util.Log;
@@ -11,28 +11,23 @@ import androidx.lifecycle.MutableLiveData;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.to_visit_app.comBackend.UrlSetter;
 import com.example.to_visit_app.model.JSONParser;
 import com.example.to_visit_app.model.VisitModel;
 
-import java.util.List;
-
 public class VisitViewModel extends AndroidViewModel {
 
     private final JSONParser cParser = new JSONParser();
     private final RequestQueue mRequestQueue;
 
-    private MutableLiveData<VisitModel> visit;
-    private final Application application;
+    public MutableLiveData<VisitModel> visit;
 
     private String selectedId;
 
     public VisitViewModel(@NonNull Application application) {
         super(application);
-        this.application = application;
         mRequestQueue = Volley.newRequestQueue(application.getApplicationContext());
     }
 
