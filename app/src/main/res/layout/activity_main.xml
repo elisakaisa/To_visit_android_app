@@ -61,7 +61,7 @@
 
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        android:background="?colorPrimary"
+        android:background="?colorPrimaryVariant"
 
         app:labelVisibilityMode="labeled"/>
 

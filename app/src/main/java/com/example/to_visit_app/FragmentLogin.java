@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import android.widget.EditText;
 
 import com.example.to_visit_app.viewModel.LoginViewModel;
 import com.example.to_visit_app.utils.AlertDial;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,16 +75,33 @@ public class FragmentLogin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        EditText etUsername = view.findViewById(R.id.et_username);
-        EditText etPassword = view.findViewById(R.id.et_password);
+        TextInputLayout tiPassword = view.findViewById(R.id.ti_password);
+        TextInputLayout tiUsername = view.findViewById(R.id.ti_username);
+        TextInputEditText etUsername = view.findViewById(R.id.et_username);
+        TextInputEditText etPassword = view.findViewById(R.id.et_password);
         Button btnLogin = view.findViewById(R.id.btn_login);
 
         /*-------- VIEW MODEL ---------*/
         loginVM = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
 
         /*-------- LISTENERS --------*/
+        //etPassword.se
+
         btnLogin.setOnClickListener(v -> {
-            loginVM.login(String.valueOf(etUsername.getText()), String.valueOf(etPassword.getText())) ;
+            if (!isFieldEmpty(etPassword.getText())) {
+                tiPassword.setError("password required");
+            } else {
+                tiPassword.setError(null);
+                loginVM.login(String.valueOf(etUsername.getText()), String.valueOf(etPassword.getText())) ;
+            }
+        });
+
+        // TODO: fix this listener https://codelabs.developers.google.com/codelabs/mdc-101-java#4
+        etPassword.setOnKeyListener((view1, i, keyEvent) -> {
+            if(isFieldEmpty(etPassword.getText())) {
+                tiPassword.setError(null);
+            }
+            return false;
         });
 
         loginVM.setLoginListener((loggedIn, errorMessage, user) -> {
@@ -103,5 +124,9 @@ public class FragmentLogin extends Fragment {
         });
 
         return view;
+    }
+
+    private Boolean isFieldEmpty(Editable text) {
+        return text != null && text.length() > 1;
     }
 }
