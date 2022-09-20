@@ -2,6 +2,7 @@ package com.example.to_visit_app;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +14,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.to_visit_app.ViewModel.VisitViewModel;
+import com.example.to_visit_app.databinding.FragmentVisitBinding;
+import com.example.to_visit_app.model.VisitModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,32 +69,20 @@ public class FragmentVisit extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_visit, container, false);
+        FragmentVisitBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_visit, container, false);
+        view = binding.getRoot();
         // Inflate the layout for this fragment
 
         TableLayout table = view.findViewById(R.id.tableLayout);
         table.setVisibility(View.GONE);
         TextView tvLoading = view.findViewById(R.id.tv_loading_ind);
-        TextView tvWhat = view.findViewById(R.id.tv_what_ind);
-        TextView tvWhere = view.findViewById(R.id.tv_where_ind);
-        TextView tvTime = view.findViewById(R.id.tv_time_ind);
-        TextView tvCategory = view.findViewById(R.id.tv_cat_ind);
-        TextView tvTimeOfYear = view.findViewById(R.id.tv_toy_ind);
-        TextView tvHow = view.findViewById(R.id.tv_how_ind);
-        TextView tvPriceCat = view.findViewById(R.id.tv_price_cat_ind);
-        TextView tvOrganisation = view.findViewById(R.id.tv_eoo_ind);
 
         VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
         model.getSelectedVisits().observe(requireActivity(), visit -> {
+            binding.setVisit(visit);
             tvLoading.setVisibility(View.GONE);
             table.setVisibility(View.VISIBLE);
-            tvWhat.setText(visit.get(0).getWhat());
-            tvWhere.setText(visit.get(0).getWhere());
-            tvTime.setText(String.valueOf(visit.get(0).getTime())); //TODO: add if conditions that check through enum
-            tvCategory.setText(String.valueOf(visit.get(0).getCategory()));
-            tvHow.setText(String.valueOf(visit.get(0).getHow()));
-            tvPriceCat.setText(String.valueOf(visit.get(0).getPriceCategory()));
-            tvOrganisation.setText(String.valueOf(visit.get(0).getEaseOfOrganisation()));
+            // todo: make sure that actualPrice and TotWalkingDistance are invisible if -1
         });
 
         return view;

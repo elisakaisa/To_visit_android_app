@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".FragmentVisit">
+    <data>
+        <variable name="visit" type="com.example.to_visit_app.model.VisitModel"/>
+    </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
@@ -20,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/visit"
+                android:text="@{visit.getWhat()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +58,7 @@
                         android:id="@+id/tv_where_ind"
                         android:gravity="end"
                         android:padding="3dip"
-                        android:text="@string/where" />
+                        android:text="@{visit.getWhere()}" />
                 </TableRow>
 
                 <TableRow>
@@ -70,7 +71,7 @@
                         android:id="@+id/tv_cat_ind"
                         android:gravity="end"
                         android:padding="3dip"
-                        android:text="@string/categories" />
+                        android:text="@{visit.getStringCategory()}" />
                 </TableRow>
 
                 <TableRow>
@@ -96,7 +97,7 @@
                         android:id="@+id/tv_how_ind"
                         android:gravity="end"
                         android:padding="3dip"
-                        android:text="@string/how" />
+                        android:text="@{visit.getStringHow()}" />
                 </TableRow>
 
                 <TableRow>
@@ -109,7 +110,7 @@
                         android:id="@+id/tv_eoo_ind"
                         android:gravity="end"
                         android:padding="3dip"
-                        android:text="@string/organisation" />
+                        android:text="@{visit.getEaseOfOrganisation()}" />
                 </TableRow>
 
                 <TableRow>
@@ -122,7 +123,7 @@
                         android:id="@+id/tv_price_cat_ind"
                         android:gravity="end"
                         android:padding="3dip"
-                        android:text="@string/price_category" />
+                        android:text="@{visit.getPriceCategory()}" />
                 </TableRow>
 
                 <TableRow>
@@ -135,7 +136,7 @@
                         android:id="@+id/tv_time_ind"
                         android:gravity="end"
                         android:padding="3dip"
-                        android:text="@string/time" />
+                        android:text="@{visit.getTime()}" />
                 </TableRow>
 
             </TableLayout>
@@ -145,4 +146,4 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+</layout>

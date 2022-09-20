@@ -16,6 +16,33 @@ public class VisitModel {
     private Boolean mDone;
     private float mTotWalkingDistance, mActualPrice;
 
+    public VisitModel(
+            String what,
+            String id,
+            String where,
+            String time,
+            String priceCategory,
+            String eoo,
+            String notes,
+            JSONArray category,
+            JSONArray how,
+            Boolean done,
+            String totWalkDist,
+            String actualPrice) throws JSONException {
+        this.mWhat = what;
+        this.mId = id;
+        this.mWhere = where;
+        this.mTime = time;
+        this.mPriceCategory = priceCategory;
+        this.mEaseOfOrganisation = eoo;
+        this.mNotes = notes;
+        Helpers.parseJSONArray(category, mCategory);
+        Helpers.parseJSONArray(how, mHow);
+        this.mDone = done;
+        this.mTotWalkingDistance = Helpers.convertToFloat(totWalkDist);
+        this.mActualPrice = Helpers.convertToFloat(actualPrice);
+    }
+
     enum Time {
         day, weekend, long_weekend, week
     }
@@ -32,60 +59,42 @@ public class VisitModel {
     public void setId(String id) { mId = id; }
     public String getId() { return mId; }
 
-    public void setWhere(String where) { mWhere = where; }
     public String getWhere() { return mWhere; }
 
-    public void setNotes(String notes) { mNotes = notes; }
     public String getNotes() { return mNotes; }
 
-    public void setDone(Boolean done) { mDone = done; }
     public Boolean getDone() { return mDone; }
 
-    public void setTotalWalkingDistance(String totalWalkingDistance) {
-        if (totalWalkingDistance.equals("null")) mTotWalkingDistance = -1;
-        else mTotWalkingDistance = Float.parseFloat(totalWalkingDistance);
-    }
     public float getTotWalkingDistance() { return mTotWalkingDistance; }
 
-    public void setActualPrice(String actualPrice) {
-        if (actualPrice.equals("null")) mActualPrice = -1;
-        else mActualPrice = Float.parseFloat(actualPrice);
-    }
     public float getActualPrice() { return mActualPrice; }
 
-    public void setCategory(JSONArray category) throws JSONException{
-        Helpers.parseJSONArray(category, mCategory);
-    }
     public ArrayList<String> getCategory() { return mCategory; }
+    public String getStringCategory() { return String.valueOf(mCategory);}
 
-    public void setHow(JSONArray how) throws JSONException{
-        Helpers.parseJSONArray(how, mHow);
-    }
     public ArrayList<String> getHow() { return mHow; }
+    public String getStringHow() { return String.valueOf(mHow); }
 
-    public void setTime(String time) { mTime = time; }
-    public Time getTime() {
-        if (mTime.equals("day")) return Time.day;
-        if (mTime.equals("weekend")) return Time.weekend;
-        if (mTime.equals("long weekend")) return Time.long_weekend;
-        if (mTime.equals("week")) return Time.week;
+    public String getTime() {
+        if (mTime.equals("day")) return String.valueOf(Time.day);
+        if (mTime.equals("weekend")) return String.valueOf(Time.weekend);
+        if (mTime.equals("long weekend")) return String.valueOf(Time.long_weekend);
+        if (mTime.equals("week")) return String.valueOf(Time.week);
         else return null;
     }
 
-    public void setPriceCategory(String priceCat) { mPriceCategory = priceCat; }
-    public PriceCategory getPriceCategory() {
-        if (mPriceCategory.equals("free")) return PriceCategory.free;
-        if (mPriceCategory.equals("$")) return PriceCategory.$;
-        if (mPriceCategory.equals("$$")) return PriceCategory.$$;
-        if (mPriceCategory.equals("$$$")) return PriceCategory.$$$;
+    public String getPriceCategory() {
+        if (mPriceCategory.equals("free")) return String.valueOf(PriceCategory.free);
+        if (mPriceCategory.equals("$")) return String.valueOf(PriceCategory.$);
+        if (mPriceCategory.equals("$$")) return String.valueOf(PriceCategory.$$);
+        if (mPriceCategory.equals("$$$")) return String.valueOf(PriceCategory.$$$);
         else return null;
     }
 
-    public void setEaseOfOrganisation(String eoo) { mEaseOfOrganisation = eoo; }
-    public EaseOfOrganisation getEaseOfOrganisation() {
-        if (mEaseOfOrganisation.equals("*")) return EaseOfOrganisation.EASY;
-        if (mEaseOfOrganisation.equals("**")) return EaseOfOrganisation.MEDIUM;
-        if (mEaseOfOrganisation.equals("***")) return EaseOfOrganisation.HARD;
+    public String getEaseOfOrganisation() {
+        if (mEaseOfOrganisation.equals("*")) return String.valueOf(EaseOfOrganisation.EASY);
+        if (mEaseOfOrganisation.equals("**")) return String.valueOf(EaseOfOrganisation.MEDIUM);
+        if (mEaseOfOrganisation.equals("***")) return String.valueOf(EaseOfOrganisation.HARD);
         else return null;
     }
 }
