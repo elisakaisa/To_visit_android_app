@@ -18,6 +18,7 @@ import com.example.to_visit_app.RecyclerView.VisitAdapter;
 import com.example.to_visit_app.RecyclerView.VisitRecycler;
 import com.example.to_visit_app.RecyclerView.VisitRecyclerInterface;
 import com.example.to_visit_app.ViewModel.VisitViewModel;
+import com.example.to_visit_app.ViewModel.VisitsViewModel;
 import com.example.to_visit_app.model.VisitList;
 import com.example.to_visit_app.model.VisitModel;
 
@@ -80,7 +81,7 @@ public class FragmentHome extends Fragment implements VisitRecyclerInterface {
         SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         RecyclerView visit_rv = view.findViewById(R.id.rv_visits);
 
-        VisitViewModel model = new ViewModelProvider(requireActivity()).get(VisitViewModel.class);
+        VisitsViewModel model = new ViewModelProvider(requireActivity()).get(VisitsViewModel.class);
         model.getVisits().observe(requireActivity(), visits -> {
 
             ArrayList<VisitList> itemList = new ArrayList<>();

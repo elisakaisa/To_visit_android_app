@@ -25,7 +25,6 @@ public class VisitViewModel extends AndroidViewModel {
     private final JSONParser cParser = new JSONParser();
     private final RequestQueue mRequestQueue;
 
-    private MutableLiveData<List<VisitModel>> visits;
     private MutableLiveData<VisitModel> visit;
     private final Application application;
 
@@ -37,30 +36,6 @@ public class VisitViewModel extends AndroidViewModel {
         mRequestQueue = Volley.newRequestQueue(application.getApplicationContext());
     }
 
-    /*----------- GET ALL VISITS --------------*/
-    public LiveData<List<VisitModel>> getVisits() {
-        if (visits == null) {
-            visits = new MutableLiveData<>();
-            loadVisits();
-        }
-        return visits;
-    }
-
-    public void loadVisits() {
-        // asynchronous operation to fetch visits
-        String mUrl = UrlSetter.getVisitApiUrl();
-        JsonArrayRequest getVisitRequest = new JsonArrayRequest(Request.Method.GET, mUrl, null, response -> {
-            try {
-                List<VisitModel> visitData = cParser.getVisits(response);
-                visits.setValue(visitData);
-            } catch (Exception e){
-                Log.i("error whilst parsing", e.toString());
-            }
-        },
-                errorListener);
-        getVisitRequest.setTag(this);
-        mRequestQueue.add(getVisitRequest);
-    }
 
     private final Response.ErrorListener errorListener = error -> {
         Log.i("Volley error", error.toString());
