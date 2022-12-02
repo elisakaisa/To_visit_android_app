@@ -7,7 +7,7 @@ It is an extension to my already existing project of having a webapp to keep tra
 
 The RestAPI used in this application has been made by me, in JavaScript using NodeJs, and the source code can be found [here](https://github.com/elisakaisa/ToVisitWebApp).
 
-A [webapp](https://pacific-spire-62523.herokuapp.com/) version also exists, in JavaScript using React.js, and the soure code can be found [here](https://github.com/elisakaisa/ToVisitWebApp_clientSide).
+A [webapp](https://to-visit-webapp.up.railway.app/), deployed with railway, version also exists, in JavaScript using React.js, and the soure code can be found [here](https://github.com/elisakaisa/ToVisitWebApp_clientSide).
 
 ## Installation
 
